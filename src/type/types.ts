@@ -7,9 +7,8 @@ export type LabelData = {
   key: number
 }
 
-export type LabelProps = {
+export interface LabelProps {
   data: LabelData;
-  containerMouseEnter: ()=> React.MouseEvent;
-  containerMouseLeave: ()=> React.MouseEvent;
   parentWidth: number
+  parentHeight: number
 };

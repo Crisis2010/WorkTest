@@ -8,8 +8,8 @@ export const Preview: FC = observer(children => {
   const [preview, setPreview] = useState<string | null>();
   const [divArray, setDivArray] = useState<any>([]);
   const RefParent = useRef<any>()
-  const [parentWidth, setParentWidth] = useState();
-  const [parentHeight, setParentHeight] = useState();
+  const [parentWidth, setParentWidth] = useState<number>();
+  const [parentHeight, setParentHeight] = useState<number>();
 
   const imageClick = (e: any) => {
     const rect = e.target.getBoundingClientRect();
@@ -33,28 +33,10 @@ export const Preview: FC = observer(children => {
     }
   }, [children]);
 
-  const getDivList = () => {
+  const getDivList:any = () => {
     const markerList = divArray.map((el: any, index: number) => {
 
-      const inputChange = (e: any) => {
-        const newList = [...divArray];
-        newList[index].text = e.target.value;
-        setDivArray(newList);
-      };
-
-      const containerMouseEnter = () => {
-        const newList = [...divArray];
-        newList[index].clicked = true;
-        setDivArray(newList);
-      };
-
-      const containerMouseLeave = () => {
-        const newList = [...divArray];
-        newList[index].clicked = false;
-        setDivArray(newList);
-      };
-
-      return <Label onMouseEnter={containerMouseEnter} onMouseLeave={containerMouseLeave} data={el} parentWidth={parentWidth!} parentHeight={parentHeight}/>;
+      return <Label data={el} parentWidth={parentWidth!} parentHeight={parentHeight!}/>;
     });
     return markerList;
   };
