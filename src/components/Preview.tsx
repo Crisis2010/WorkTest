@@ -2,26 +2,31 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { uuidv4} from 'utils';
 import { Label } from './Label';
+import type { LabelData } from '../type/types';
 
 export const Preview: FC = observer(children => {
   const [image, setImage] = useState<any>(children.children);
-  const [preview, setPreview] = useState<string | null>();
-  const [divArray, setDivArray] = useState<any>([]);
-  const RefParent = useRef<any>()
-  const [parentWidth, setParentWidth] = useState<number>();
-  const [parentHeight, setParentHeight] = useState<number>();
+  const [preview, setPreview] = useState<string>('');
+  const [divArray, setDivArray] = useState<LabelData[]>([]);
+  const imageWrapRef = useRef<HTMLDivElement>(null)
+  const [parentWidth, setParentWidth] = useState<number>(0);
+  const [parentHeight, setParentHeight] = useState<number>(0);
 
   const imageClick = (e: any) => {
+    if (e.target.tagName === 'INPUT') return
     const rect = e.target.getBoundingClientRect();
     const width = e.clientX - rect.left;
     const height = e.clientY - rect.top;
-    const elem = { key: uuidv4(), width, height, text: 'Label', clicked: false };
+    const elem = { id: uuidv4(), width, height, text: 'Label', clicked: false };
     setDivArray([...divArray, elem]);
   };
 
   useEffect(() => {
-    setParentWidth(RefParent.current.clientWidth)
-    setParentHeight(RefParent.current.clientHeight)
+    if (imageWrapRef.current) {
+      setParentWidth(imageWrapRef.current.clientWidth)
+      setParentHeight(imageWrapRef.current.clientHeight)
+    }
+
     if ({children}) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -29,20 +34,19 @@ export const Preview: FC = observer(children => {
       };
       reader.readAsDataURL(image);
     } else {
-      setPreview(null);
+      setPreview('');
     }
   }, [children]);
 
   const getDivList:any = () => {
     const markerList = divArray.map((el: any, index: number) => {
-
-      return <Label data={el} parentWidth={parentWidth!} parentHeight={parentHeight!}/>;
+      return <Label key={index} data={el} parentWidth={parentWidth} parentHeight={parentHeight}/>;
     });
     return markerList;
   };
 
   return (
-    <div className={'img-wrap'} onDoubleClick={imageClick} ref={RefParent}>
+    <div className={'img-wrap'} onDoubleClick={imageClick} ref={imageWrapRef}>
       <img src={preview as string} alt="image" />
       <button className={'button-preview'}>Удалить</button>
       {getDivList()}

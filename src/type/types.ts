@@ -4,7 +4,7 @@ export type LabelData = {
   width: number
   height: number
   clicked: boolean
-  key: number
+  id: string
 }
 
 export interface LabelProps {

@@ -4,7 +4,7 @@ import type { LabelProps } from "../type/types";
 
 export const Label: React.FC<LabelProps> = ({ data, parentWidth }) => {
 
-  const {width, height, clicked, key, text} = data
+  const {width, height, clicked, id, text} = data
   const [labelText, setLabelText] = useState<string>(text)
   const widthCurrent = (width * 100) / parentWidth
   const [isToggle, setIsToggle] = useState<boolean>(clicked)
@@ -19,7 +19,7 @@ export const Label: React.FC<LabelProps> = ({ data, parentWidth }) => {
 
   return (
     <div
-      key={key}
+      key={id}
       onClick={inputChange}
       // onMouseEnter={containerMouseEnter}
       // onMouseLeave={containerMouseLeave}
