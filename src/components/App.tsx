@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState } from 'react';
-import { Preview } from './components/Preview';
-import './styles/style.css';
+import { Preview } from './Preview';
+import '../styles/style.css';
 
 export const App: FC = () => {
   const fileInput = useRef<any>();
@@ -27,33 +27,25 @@ export const App: FC = () => {
     if (file) {
       setImage(file);
       setIsPreview(true);
-    } else {
-      // setImage(null)
     }
   }
+
+  const triggerInput = (e: any) => {
+    if (isPreview) return
+    fileInput.current.click();
+  };
 
   function onLoadHandler(e: any) {
     e.preventDefault();
     e.stopPropagation();
     const files = e.target.files;
     const file = files[0];
-    if (file) {
-      setImage(file);
-    } else {
-      // setImage(null)
-    }
-    // setDrag(false)
+
+    console.log(file);
+    setIsPreview(true);
+    console.log(isPreview);
+    if (file) setImage(file);
   }
-
-  const triggerInput = () => {
-    // почему србатывает 2 раза?
-    if (!isPreview) {
-      // fileInput.current.click()
-      // console.log('123123')
-    }
-  };
-
-  console.log(isPreview);
 
   return (
     <form
@@ -61,7 +53,7 @@ export const App: FC = () => {
       onDragOver={e => dragStartHandler(e)}
       onDragLeave={e => dragLeaveHandler(e)}
       onDrop={e => onDropHandler(e)}
-      onClick={event => triggerInput()}
+      onClick={e => triggerInput(e)}
     >
       <input type="file" ref={fileInput} onChange={event => onLoadHandler(event)} style={{ display: 'none' }} />
       {isPreview && <Preview children={image} />}

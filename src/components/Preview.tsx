@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { observer } from 'mobx-react-lite';
 import { uuidv4} from 'utils';
 import { Label } from './Label';
 import type { LabelData } from '../type/types';
 
-export const Preview: FC = observer(children => {
+export const Preview: FC = (children) => {
   const [image, setImage] = useState<any>(children.children);
+  console.log(image);
   const [preview, setPreview] = useState<string>('');
   const [divArray, setDivArray] = useState<LabelData[]>([]);
   const imageWrapRef = useRef<HTMLDivElement>(null)
@@ -51,5 +51,5 @@ export const Preview: FC = observer(children => {
       <button className={'button-preview'}>Удалить</button>
       {getDivList()}
     </div>
-  );
-});
+  )
+};
