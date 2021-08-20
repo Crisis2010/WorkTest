@@ -12,7 +12,7 @@ export function useWindowSize() {
     window.addEventListener('resize', debounce(updateSize, 5));
     updateSize();
 
-    return ()  => window.removeEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
   }, []);
 
   return size;
