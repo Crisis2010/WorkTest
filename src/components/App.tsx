@@ -1,38 +1,42 @@
-import React, { FC, useRef, useState } from 'react';
-import { Preview } from './Preview';
+import React, { useRef, useState } from 'react';
+import { FileInput, Preview } from './../components';
+import styles from '../styles/base.module.css'
 import '../styles/style.css';
 
-export const App: FC = () => {
-  const fileInput = useRef<any>();
+export const App: React.FC = () => {
+  const [files, setFiles] = useState<any>();
   const [image, setImage] = useState<File>();
-  const [isPreview, setIsPreview] = useState<boolean>(false);
 
-  function dragStartHandler(e: React.DragEvent<HTMLFormElement>) {
-    e.preventDefault();
-    e.stopPropagation();
-    // setDrag(true)
-  }
+  const dragStartHandler = (e: React.DragEvent<HTMLFormElement>) => e.preventDefault();
+  const dragLeaveHandler = (e: React.DragEvent<HTMLFormElement>) => e.preventDefault();
 
-  function dragLeaveHandler(e: React.DragEvent<HTMLFormElement>) {
+  const onDropHandler = (e: any) => {
     e.preventDefault();
-    e.stopPropagation();
-    // setDrag(false)
-  }
 
-  function onDropHandler(e: any) {
-    e.preventDefault();
-    e.stopPropagation();
-    const files = [...e.dataTransfer.files];
-    const file = files[0];
+    const file = e.dataTransfer.files[0];
+
     if (file) {
-      setImage(file);
-      setIsPreview(true);
+      const reader = new FileReader();
+      reader.onloadend = () => setImage(reader.result as any);
+      reader.readAsDataURL(file);
     }
-  }
+  };
+
+  const onFileLoad = (e: any) => {
+    e.preventDefault();
+
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => setImage(reader.result as any);
+      reader.readAsDataURL(file);
+    }
+  };
 
   const triggerInput = (e: any) => {
-    if (isPreview) return
-    fileInput.current.click();
+    // if (isPreview) return
+    // fileInput.current.click();
   };
 
   function onLoadHandler(e: any) {
@@ -42,21 +46,25 @@ export const App: FC = () => {
     const file = files[0];
 
     console.log(file);
-    setIsPreview(true);
-    console.log(isPreview);
+    // setIsPreview(true);
     if (file) setImage(file);
   }
 
   return (
-    <form
-      className={!isPreview ? 'wrapper' : `wrapper active`}
-      onDragOver={e => dragStartHandler(e)}
-      onDragLeave={e => dragLeaveHandler(e)}
-      onDrop={e => onDropHandler(e)}
-      onClick={e => triggerInput(e)}
-    >
-      <input type="file" ref={fileInput} onChange={event => onLoadHandler(event)} style={{ display: 'none' }} />
-      {isPreview && <Preview children={image} />}
-    </form>
+    <main className={styles.main}>
+      {image ? (
+        <Preview img={image} />
+      ) : (
+        <form
+          className={!image ? 'wrapper' : `wrapper active`}
+          onDragOver={dragStartHandler}
+          onDragLeave={dragLeaveHandler}
+          onDrop={onDropHandler}
+          onSubmit={e => e.preventDefault()}
+        >
+          <FileInput onChange={onFileLoad} value={files} />
+        </form>
+      )}
+    </main>
   );
 };

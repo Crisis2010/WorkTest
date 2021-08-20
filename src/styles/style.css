@@ -53,8 +53,9 @@ body {
 }
 
 .wrapper:before {
-  content: 'Перетащита файл для загрузки';
+  content: '';
   width: 90%;
+  /*content: 'Перетащита файл для загрузки';*/
   height: 85%;
   position: absolute;
   top: 50%;
