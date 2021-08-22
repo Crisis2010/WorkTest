@@ -33,20 +33,13 @@ optgroup,
 select,
 textarea {
   line-height: inherit;
-  border: 1px solid currentColor;
+  border: none;
 }
 
 button {
   overflow: visible;
   text-transform: none;
-}
-
-button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
-  -webkit-appearance: button;
-  padding: 1px 6px;
+  cursor: pointer;
 }
 
 input {
@@ -168,4 +161,9 @@ table {
   width: 100vw;
   overflow: hidden;
   background: #e0e0e0;
+}
+
+::selection {
+  background: rgba(80, 175, 73, 0.75);
+  color: #fff;
 }

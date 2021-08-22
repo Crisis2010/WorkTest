@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
-import { FileInput, Preview } from './components';
+import { Logo } from 'assets';
+import { FileInput, Preview } from 'components';
 import styles from './styles/base.module.css';
 
 const App: React.FC = () => {
@@ -59,9 +60,17 @@ const App: React.FC = () => {
 
   return (
     <main className={styles.main}>
+      {!image && (
+        <>
+          <Logo className={styles.logo} />
+          <p className={styles.about} data-text="Тестовое задание | Sergey Lunyak">
+            Тестовое задание | Sergey Lunyak
+          </p>
+        </>
+      )}
       <div className={cx(styles.block, { [styles.clickable]: !image })}>
         {image ? (
-          <Preview image={image} />
+          <Preview image={image} onReset={() => setImage(null)} />
         ) : (
           <form
             className={styles.form}

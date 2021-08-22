@@ -10,12 +10,57 @@
   object-fit: contain;
 }
 
-.point {
+.anchor {
   position: absolute;
-  border-radius: 5px;
-  height: 0.5rem;
-  width: 0.5rem;
+  height: 1px;
+  width: 1px;
   display: inline-block;
+}
+
+.point {
+  position: relative;
+  margin-left: -0.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(80, 175, 73, 0.65);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.popup {
+  position: absolute;
+  bottom: 1.75rem;
+  display: none;
+  background: rgba(80, 175, 73, 0.65);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0.625rem;
+  overflow: hidden;
+}
+
+.pointIndex {
+  font-size: 0.75rem;
+  color: #fff;
+}
+
+.popupInput {
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  color: #fff;
+  font-family: sans-serif;
+  resize: none;
+}
+
+.popupInput:focus {
+  outline: none;
 }
 
 .markerContainer {
@@ -24,20 +69,53 @@
   transform: translateY(-50%);
 }
 
-.m1 {
-  left: 2.5%;
-  top: 10%;
-  background: orange;
-}
-
-.m2 {
-  left: 5%;
-  top: 20%;
-  background: green;
-}
-
 .inner {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.menuWrapper {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.menu {
+  display: flex;
+  overflow: hidden;
+  height: 2.5rem;
+  background: rgba(80, 175, 73, 0.65);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 0.625rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.menuButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  opacity: 1;
+  transition: all 0.3s ease-in-out;
+}
+
+.menuButton.active {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.menuButton:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.menuButton:hover {
+  opacity: 0.5;
+  background: rgba(255, 255, 255, 0.25);
 }
